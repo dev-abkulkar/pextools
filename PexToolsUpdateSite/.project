@@ -3,6 +3,7 @@
 	<name>PexToolsUpdateSite</name>
 	<comment></comment>
 	<projects>
+		<project>PexToolsFeature</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
