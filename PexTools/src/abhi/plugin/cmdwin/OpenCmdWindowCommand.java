@@ -29,14 +29,14 @@ public class OpenCmdWindowCommand extends AbstractHandler {
 	private String commandId = null;
 	private static final String OPEN_COMMAND_WINDOW = "abhi.plugin.cmdwin.commands.opencmdwin";
 	private static final String OPEN_FOLDER_WINDOW = "abhi.plugin.cmdwin.commands.openfolder";
-	
+	private Shell shell = null; 
 	
 	
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		if(Platform.getOS().equals(Platform.OS_WIN32)){
+		
 		commandId = event.getCommand().getId();
-		Shell shell = HandlerUtil.getActiveShell(event);
+		shell = HandlerUtil.getActiveShell(event);
 		//MessageDialog.openInformation(shell, "COMMAND ID",commandId );
 		ISelection sel = HandlerUtil.getActiveMenuSelection(event);
 		IStructuredSelection selection = (IStructuredSelection) sel;
@@ -90,7 +90,6 @@ public class OpenCmdWindowCommand extends AbstractHandler {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		}
 		return null;
 	}
 
@@ -101,13 +100,17 @@ public class OpenCmdWindowCommand extends AbstractHandler {
 		OpenCmdWindowThread(String absPath) {
 			this.absPath = absPath;
 			if(OPEN_COMMAND_WINDOW.equals(commandId))
-				this.cmdWindow = new String[] { "cmd.exe", "/C","\"start; cd " + absPath + "\"" };
+				this.cmdWindow = getStringForOpenCommandWindow();
 			else if(OPEN_FOLDER_WINDOW.equals(commandId))
-				this.cmdWindow = new String[]{"explorer.exe",absPath.replace('/', '\\')};
+				this.cmdWindow = getStringForOpenFolderWindow();
 		}
 
 		@Override
 		public void run() {
+			if(cmdWindow == null){
+				MessageDialog.openError(shell, "Sorry!", "This feature is unavailable on your Operating System");
+				return;
+			}
 			try {
 				Runtime.getRuntime().exec(cmdWindow);
 			} catch (IOException e) {
@@ -115,7 +118,27 @@ public class OpenCmdWindowCommand extends AbstractHandler {
 				e.printStackTrace();
 			}
 
-		};
+		}
+		
+		public String[] getStringForOpenCommandWindow(){
+			if(Platform.getOS().equals(Platform.OS_WIN32)){
+				return new String[] { "cmd.exe", "/C","\"start; cd " + absPath + "\"" };
+			}else if(Platform.getOS().equals(Platform.OS_LINUX)){
+				return new String[] {"gnome-terminal","--working-directory="+absPath};
+			}
+			
+			return null;
+		}
+		
+		public String[] getStringForOpenFolderWindow(){
+			if(Platform.getOS().equals(Platform.OS_WIN32)){
+				return new String[]{"explorer.exe",absPath.replace('/', '\\')};
+			}else if(Platform.getOS().equals(Platform.OS_LINUX)){
+				return new String[] {"nautilus",absPath};
+			}
+			return null;
+			
+		}
 	}
 	
 }

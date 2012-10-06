@@ -6,7 +6,6 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.jdt.internal.core.JarPackageFragmentRoot;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
@@ -24,7 +23,7 @@ public class CopyFilePathCommand extends AbstractHandler {
 	
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		if(Platform.getOS().equals(Platform.OS_WIN32)){
+
 		Shell shell = HandlerUtil.getActiveShell(event);
 		// MessageDialog.openInformation(shell, "COMMAND ID",commandId );
 		ISelection sel = HandlerUtil.getActiveMenuSelection(event);
@@ -53,7 +52,7 @@ public class CopyFilePathCommand extends AbstractHandler {
 		}
 		if(locationPath!=null)
 			ClipBoardUtil.copy(locationPath.toString());
-		}
+		
 		return null;
 	}
 
