@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Cmdwin
 Bundle-SymbolicName: PexTools;singleton:=true
-Bundle-Version: 1.0.0.1
+Bundle-Version: 1.0.0.2
 Bundle-Activator: abhi.plugin.cmdwin.Activator
 Bundle-Vendor: Abhinandan M K
 Require-Bundle: org.eclipse.ui,
