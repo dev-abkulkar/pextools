@@ -48,8 +48,7 @@
 
    <plugin
          id="PexTools"
-         os="win32"
-         ws="win32"
+         os="linux,win32"
          download-size="15"
          install-size="15"
          version="1.0.0.1"
