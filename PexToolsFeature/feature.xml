@@ -51,7 +51,7 @@
          os="linux,win32"
          download-size="15"
          install-size="15"
-         version="1.0.0.1"
+         version="0.0.0"
          unpack="false"/>
 
 </feature>
