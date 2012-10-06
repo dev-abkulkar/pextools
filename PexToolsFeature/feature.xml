@@ -17,7 +17,7 @@
    </copyright>
 
    <license url="http://www.gnu.org/licenses/gpl.html">
-       Copyright (C) 2012  Abhinandan M Kulkarni
+      Copyright (C) 2012  Abhinandan M Kulkarni
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -32,6 +32,12 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see http://www.gnu.org/licenses/.
    </license>
+
+   <url>
+      <update url="https://pextools.googlecode.com/svn/trunk/PexToolsUpdateSite/site.xml"/>
+      <discovery label="Pextools Project home page" url="http://code.google.com/p/pextools/"/>
+      <discovery label="Abhi&apos;s Blog" url="http://abhinandanmk.blogspot.com/"/>
+   </url>
 
    <requires>
       <import plugin="org.eclipse.ui"/>
@@ -48,10 +54,5 @@
          install-size="15"
          version="1.0.0.1"
          unpack="false"/>
-	
-	<url>
-      <discovery label="Pextools Project home page" url="http://code.google.com/p/pextools/"/>
-      <discovery label="Abhi's Blog" url="http://abhinandanmk.blogspot.com/"/>
-   </url>
 
 </feature>
