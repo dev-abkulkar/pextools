@@ -17,45 +17,53 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
 
+import abhi.plugin.util.Utils;
+
 @SuppressWarnings("restriction")
 public class CopyFilePathCommand extends AbstractHandler {
 
+	private ExecutionEvent event = null;
 	
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-
+		this.event =  event;
 		Shell shell = HandlerUtil.getActiveShell(event);
-		// MessageDialog.openInformation(shell, "COMMAND ID",commandId );
-		ISelection sel = HandlerUtil.getActiveMenuSelection(event);
-		IStructuredSelection selection = (IStructuredSelection) sel;
-		IPath locationPath = null;
-		
-		
-		
-		Object firstElement = selection.getFirstElement();
-		if(firstElement instanceof JarPackageFragmentRoot){
-			locationPath= ((JarPackageFragmentRoot)firstElement).getPath();
-		}
-		if (firstElement instanceof IResource) {
-			locationPath = ((IResource) firstElement).getLocation();
-			
-		} else if (firstElement instanceof IAdaptable) {
-			IResource resource = (IResource) ((IAdaptable)firstElement).getAdapter(IResource.class);
-			if(resource!=null){
-				locationPath = resource.getLocation();
-					
-			}
-		} else {
-			MessageDialog.openInformation(shell, "Hi",
-					"You have opened an : \n" + firstElement.getClass());
-
-		}
+		IPath locationPath = locatePathToResource();	
 		if(locationPath!=null)
 			ClipBoardUtil.copy(locationPath.toString());
+		else
+			MessageDialog.openInformation(shell, "Hi","Please select a folder/file ");
 		
 		return null;
 	}
+	
+	private IPath locatePathToResource() throws ExecutionException{
+		IPath path = null;
+		ISelection sel = HandlerUtil.getActiveMenuSelection(event);
+		if (sel != null) {
+			IStructuredSelection selection = (IStructuredSelection) sel;
 
+			Object firstElement = selection.getFirstElement();
+			if (firstElement instanceof JarPackageFragmentRoot) {
+				path = ((JarPackageFragmentRoot) firstElement).getPath();
+			}
+			if (firstElement instanceof IResource) {
+				path = ((IResource) firstElement).getLocation();
+			} else if (firstElement instanceof IAdaptable) {
+				IResource resource = (IResource) ((IAdaptable) firstElement).getAdapter(IResource.class);
+				if (resource != null) {
+					path = resource.getLocation();
+				}
+			}
+		}
+		
+		if (path == null) {
+			path = Utils.retrieveFilePath(event);
+		}
+		
+		return path;
+	}
+	
 	static class ClipBoardUtil {
 		public static void copy(String text) {
 			Clipboard clipboard = new Clipboard(Display.getCurrent());

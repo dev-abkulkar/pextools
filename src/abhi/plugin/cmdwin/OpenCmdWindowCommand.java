@@ -22,7 +22,13 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.eclipse.ui.part.FileEditorInput;
+
+import abhi.plugin.util.Utils;
 
 @SuppressWarnings("restriction")
 public class OpenCmdWindowCommand extends AbstractHandler {
@@ -30,67 +36,34 @@ public class OpenCmdWindowCommand extends AbstractHandler {
 	private static final String OPEN_COMMAND_WINDOW = "abhi.plugin.cmdwin.commands.opencmdwin";
 	private static final String OPEN_FOLDER_WINDOW = "abhi.plugin.cmdwin.commands.openfolder";
 	private Shell shell = null; 
-	
+	private ExecutionEvent event = null;
 	
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
+		this.event = event;
+		this.commandId = event.getCommand().getId();
+		this.shell = HandlerUtil.getActiveShell(event);
 		
-		commandId = event.getCommand().getId();
-		shell = HandlerUtil.getActiveShell(event);
-		//MessageDialog.openInformation(shell, "COMMAND ID",commandId );
-		ISelection sel = HandlerUtil.getActiveMenuSelection(event);
-		IStructuredSelection selection = (IStructuredSelection) sel;
-		IPath locationPath =null;
-		Object firstElement = selection.getFirstElement();
-		
-		try {
-			if(firstElement instanceof JarPackageFragmentRoot){
-				
-				locationPath= ((JarPackageFragmentRoot)firstElement).getPath();
-				locationPath = locationPath.removeLastSegments(1);
-				
-			}else if (firstElement instanceof IFolder || firstElement instanceof IProject || firstElement instanceof IWorkspaceRoot ) {
-				locationPath = ((IResource) firstElement).getLocation();
-
-			}else if(firstElement instanceof IFile){
-				
-				IContainer fileParent = ((IFile) firstElement).getParent();
-				if(fileParent!=null)
-					locationPath = fileParent.getLocation();
-				
-			}
-			else if (firstElement instanceof IJavaProject) {
-				 locationPath = ((IJavaProject) firstElement).getResource()
-						.getLocation();
-
-
-			} else if (firstElement instanceof IPackageFragmentRoot && !(firstElement instanceof JarPackageFragmentRoot)) {
-				IResource resource = ((IPackageFragmentRoot) firstElement)
-						.getResource();
-				if(resource!= null){
-					locationPath = resource.getLocation();
-				}
-
-			} else if (firstElement instanceof IPackageFragment ) {
-				IResource resource = ((IPackageFragment) firstElement).getResource();
-				if(resource!= null){
-					locationPath = resource.getLocation();
-				}
-
-			}else if (firstElement instanceof ICompilationUnit) {
-				locationPath = ((ICompilationUnit) firstElement).getResource().getParent().getLocation();
-			} 
+		try{
+			IPath locationPath = locatePathToResource();
 			
 			if(locationPath != null)
 				new Thread(new OpenCmdWindowThread(locationPath.toString())).start();
-			else {
- 				MessageDialog.openInformation(shell, "Hi","Please select a folder/file: " + firstElement.getClass());
-			} 
+			else
+				MessageDialog.openInformation(shell, "Hi","Please select a folder/file ");	
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	private IPath locatePathToResource() throws ExecutionException{
+		IPath path = Utils.retrievePathToResourceFromPackageExplorer(event);
+		if(path == null){
+			path = Utils.retrieveParentPath(event); 
+		}
+		return path;
 	}
 
 	class OpenCmdWindowThread implements Runnable {
@@ -98,7 +71,9 @@ public class OpenCmdWindowCommand extends AbstractHandler {
 		String[] cmdWindow = null;
 		
 		OpenCmdWindowThread(String absPath) {
+			
 			this.absPath = absPath;
+			
 			if(OPEN_COMMAND_WINDOW.equals(commandId))
 				this.cmdWindow = getStringForOpenCommandWindow();
 			else if(OPEN_FOLDER_WINDOW.equals(commandId))
@@ -109,7 +84,6 @@ public class OpenCmdWindowCommand extends AbstractHandler {
 		public void run() {
 			if(cmdWindow == null){
 				MessageDialog.openError(shell, "Sorry!", "This feature is unavailable on your Operating System");
-				return;
 			}
 			try {
 				Runtime.getRuntime().exec(cmdWindow);
@@ -122,8 +96,11 @@ public class OpenCmdWindowCommand extends AbstractHandler {
 		
 		public String[] getStringForOpenCommandWindow(){
 			if(Platform.getOS().equals(Platform.OS_WIN32)){
+				
 				return new String[] { "cmd.exe", "/C","\"start; cd " + absPath + "\"" };
+			
 			}else if(Platform.getOS().equals(Platform.OS_LINUX)){
+				
 				return new String[] {"gnome-terminal","--working-directory="+absPath};
 			}
 			
@@ -131,11 +108,16 @@ public class OpenCmdWindowCommand extends AbstractHandler {
 		}
 		
 		public String[] getStringForOpenFolderWindow(){
+			
 			if(Platform.getOS().equals(Platform.OS_WIN32)){
+				
 				return new String[]{"explorer.exe",absPath.replace('/', '\\')};
+			
 			}else if(Platform.getOS().equals(Platform.OS_LINUX)){
+				
 				return new String[] {"nautilus",absPath};
 			}
+			
 			return null;
 			
 		}
