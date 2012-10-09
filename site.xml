@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/PexTools_ShortCutsFeature_1.0.0.2.jar" id="PexTools_ShortCutsFeature" version="1.0.0.2"/>
+   <feature url="features/PexTools_ShortCutsFeature_1.0.0.2.jar" id="PexTools_ShortCutsFeature" version="1.0.0.2">
+      <category name="Abhi Tools"/>
+   </feature>
+   <category-def name="Abhi Tools" label="Abhi Tools"/>
 </site>
