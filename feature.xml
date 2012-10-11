@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="PexTools_ShortCutsFeature"
+      id="PexTools_SubMenuFeature"
       label="PexToolsFeature"
       version="1.0.0.2"
       provider-name="Abhinandan">
