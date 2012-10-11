@@ -7,7 +7,10 @@
 
    <description url="http://code.google.com/p/pextools/wiki/Welcome">
       After this plugin is installed,the right click menu on any item
-in the Package Explorer should have three extra menu options
+in the Package Explorer should have one extra submenu named &apos;PexTools&apos;
+
+The submenu has three extra menu options: 
+
 1. Open Command Window Here: Opens the Shell/Command Prompt with
 the current working directory set to the file&apos;s parent directory
 or the folder&apos;s path.
@@ -15,7 +18,6 @@ or the folder&apos;s path.
 chosen or the file&apos;s parent directory
 3. Copy Path To Clipboard: Copies the absolute path of the file
 or folder into clipboard
-
 ShortCuts for files active in the editor:
 1. Open Command Window Here: Ctrl+Alt+Z
 2. Open Folder: Ctrl+Alt+X
@@ -58,7 +60,7 @@ ShortCuts for files active in the editor:
    </requires>
 
    <plugin
-         id="PexTools_ShortCuts"
+         id="PexTools_SubMenu"
          download-size="0"
          install-size="0"
          version="1.0.0.2"
