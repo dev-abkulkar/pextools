@@ -1,3 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
+   <feature url="features/PexTools_SubMenuFeature_1.0.0.2.jar" id="PexTools_SubMenuFeature" version="1.0.0.2"/>
 </site>
