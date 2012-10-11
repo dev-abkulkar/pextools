@@ -119,5 +119,23 @@
             name="CopyPathToClipBoard">
       </command>
    </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="abhi.plugin.cmdwin.commands.opencmdwin"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+M3+Z">
+      </key>
+      <key
+            commandId="abhi.plugin.cmdwin.commands.openfolder"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+M3+X">
+      </key>
+      <key
+            commandId="abhi.plugin.cmdwin.commands.copyabspath"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+M3+C">
+      </key>
+   </extension>
 
 </plugin>
