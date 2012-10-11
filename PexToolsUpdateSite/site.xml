@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<site>
-   <feature url="features/PexToolsFeature_1.0.0.2.jar" id="PexToolsFeature" version="1.0.0.2"/>
-   <category-def name="AbhiTools" label="Abhi Tools"/>
-</site>

@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="PexToolsFeature"
+      id="PexTools_ShortCutsFeature"
       label="PexToolsFeature"
       version="1.0.0.2"
       provider-name="Abhinandan">
 
    <description url="http://code.google.com/p/pextools/wiki/Welcome">
-      After this plugin is installed,the right click menu on any item in the Package Explorer should have three extra menu options 
-    1. Open Command Window Here: Opens the Shell/Command Prompt with the current working directory set to the file&apos;s parent directory or the folder&apos;s path.
-    2. Open Folder: Opens a file explorer window with the directory chosen or the file&apos;s parent directory
-    3. Copy Path To Clipboard: Copies the absolute path of the file or folder into clipboard
+      After this plugin is installed,the right click menu on any item
+in the Package Explorer should have three extra menu options
+1. Open Command Window Here: Opens the Shell/Command Prompt with
+the current working directory set to the file&apos;s parent directory
+or the folder&apos;s path.
+2. Open Folder: Opens a file explorer window with the directory
+chosen or the file&apos;s parent directory
+3. Copy Path To Clipboard: Copies the absolute path of the file
+or folder into clipboard
+
+ShortCuts for files active in the editor:
+1. Open Command Window Here: Ctrl+Alt+Z
+2. Open Folder: Ctrl+Alt+X
+3. Copy Path To Clipboard: Ctrl+Alt+C
    </description>
 
    <copyright>
@@ -44,13 +54,13 @@
       <import plugin="org.eclipse.core.runtime" version="3.5.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.jdt.core" version="3.5.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.core.resources" version="3.5.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui.ide" version="3.5.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin
-         id="PexTools"
-         os="linux,win32"
-         download-size="15"
-         install-size="15"
+         id="PexTools_ShortCuts"
+         download-size="0"
+         install-size="0"
          version="1.0.0.2"
          unpack="false"/>
 
