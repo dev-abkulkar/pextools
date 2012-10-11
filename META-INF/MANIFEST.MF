@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Cmdwin
-Bundle-SymbolicName: PexTools_ShortCuts;singleton:=true
+Bundle-SymbolicName: PexTools_SubMenu;singleton:=true
 Bundle-Version: 1.0.0.2
 Bundle-Activator: abhi.plugin.cmdwin.Activator
 Bundle-Vendor: Abhinandan M K
