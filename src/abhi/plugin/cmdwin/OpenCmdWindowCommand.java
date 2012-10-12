@@ -97,8 +97,8 @@ public class OpenCmdWindowCommand extends AbstractHandler {
 		public String[] getStringForOpenCommandWindow(){
 			if(Platform.getOS().equals(Platform.OS_WIN32)){
 				
-				return new String[] { "cmd.exe", "/C","\"start; cd " + absPath + "\"" };
-			
+				return new String[] { "cmd.exe", "/C","\"start; cd /D " + absPath + "\"" };
+			//>cmd.exe /C "start; cd /D E:/wsapce/Test"
 			}else if(Platform.getOS().equals(Platform.OS_LINUX)){
 				
 				return new String[] {"gnome-terminal","--working-directory="+absPath};
