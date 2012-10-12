@@ -2,7 +2,7 @@
 <feature
       id="PexTools_SubMenuFeature"
       label="PexToolsFeature"
-      version="1.0.0.2"
+      version="1.0.0.3"
       provider-name="Abhinandan">
 
    <description url="http://code.google.com/p/pextools/wiki/Welcome">
@@ -63,7 +63,7 @@ ShortCuts for files active in the editor:
          id="PexTools_SubMenu"
          download-size="0"
          install-size="0"
-         version="1.0.0.2"
+         version="1.0.0.3"
          unpack="false"/>
 
 </feature>
